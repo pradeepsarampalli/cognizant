@@ -1,0 +1,539 @@
+<!Doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base Template</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            font-family: verdana;
+        }
+
+        #welcomeBanner {
+            align-self: center;
+            width: max-content;
+            max-width: 550px;
+            height: 200px;
+            padding-top: 30px;
+            margin: 10px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        #welcomeBanner p {
+            margin: 20px;
+        }
+
+        #welcomeBanner button {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            height: 40px;
+            font-size: 15px;
+        }
+
+        #welcomeBanner #register {
+            background-color: rgba(240, 201, 29, 0.8);
+        }
+
+        #welcomeBanner #browse {
+            background-color: transparent;
+            color: rgb(13, 219, 13);
+            border: 1px solid rgb(13, 219, 13);
+        }
+
+        .highlight {
+            border: 1px solid yellow;
+            background-color: rgb(195, 195, 165);
+            padding: 0px;
+            padding: 4px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        #event-gallery {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #event-gallery thead {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .event-gallery-card {
+            border: 1px solid yellow;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        #register-event {
+            text-align: center;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #register-form {
+            padding: 10px;
+            margin: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        #register-form label {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #register-form span {
+            margin-bottom: 5px;
+        }
+
+        #register-form input {
+            width: 200px;
+            height: 30px;
+        }
+
+        #event-feedback {
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #feedback-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            margin: 10px;
+        }
+
+        #feedback-form label {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #feedback-form span {
+            margin: 5px;
+        }
+
+        #feedback-form input {
+            width: 300px;
+            height: 30px;
+            padding-left: 5px;
+        }
+
+        #feedback-textarea-label {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #event-promo {
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #preference-section {
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #location-section {
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Header section-->
+    <header>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#events">Events</a>
+            <a href="#contact">Contact</a>
+            <a href="./help.html">Help</a>
+        </nav>
+    </header>
+    <!--main section-->
+    <main>
+        <section id="home">
+            <div style="background-color:rgb(109, 109, 236)" id="welcomeBanner">
+                <h1>Welcome to <span class="highlight">local community events page!</span></h1>
+                <p>A palce where the locality meets! Don't miss
+                    the new offer -
+                    <span style="color: rgb(240, 147, 7);border-bottom:1px solid tomato">Special Swimming Fest -Free
+                        Entry!</span>
+                </p>
+                <div>
+                    <button id="register">Register Now</button>
+                    <button id="browse">Browse More</button>
+                </div>
+            </div>
+        </section>
+        <section id="events"></section>
+        <section id="gallery">
+            <table id="event-gallery">
+                <caption>Event Gallery</caption>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="event-gallery-card">
+                                <img title="summer-event" width="200px" height="130px" src="src/122-600x300.jpg"
+                                    alt="event-image">
+                                <p>Summer event</p>
+                                <p>CVR college `29 may</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="event-gallery-card">
+                                <img title="summer-event" width="200px" height="130px" src="src/122-600x300.jpg"
+                                    alt="event-image">
+                                <p>Summer event</p>
+                                <p>CVR college `29 may</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="event-gallery-card">
+                                <img title="summer-event" width="200px" height="130px" src="src/122-600x300.jpg"
+                                    alt="event-image">
+                                <p>Summer event</p>
+                                <p>CVR college `29 may</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="event-gallery-card">
+                                <img title="summer-event" width="200px" height="130px" src="src/122-600x300.jpg"
+                                    alt="event-image">
+                                <p>Summer event</p>
+                                <p>CVR college `29 may</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="event-gallery-card">
+                                <img title="summer-event" width="200px" height="130px" src="src/122-600x300.jpg"
+                                    alt="event-image">
+                                <p>Summer event</p>
+                                <p>CVR college `29 may</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="event-gallery-card">
+                                <img title="summer-event" width="200px" height="130px" src="src/122-600x300.jpg"
+                                    alt="event-image">
+                                <p>Summer event</p>
+                                <p>CVR college `29 may</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <!--Event registration form-->
+        <section id="register-event">
+            <h2 style="text-align: left;">Register for Event</h2>
+            <form id="register-form" onsubmit="handleEventSubmit(event)">
+                <div>
+                <label>
+                    <span>Name * </span>
+                    <input type="text" name="name" placeholder="eg. Pradeep" required autofocus>
+                </label>
+
+                <label>
+                    <span>Email *</span>
+                    <input type="email" placeholder="someone@email.com" name="usermail" required>
+                </label>
+                </div>
+                <div>
+                <label>
+                    <span>Prefered Date</span>
+                    <input type="date" name="eventdate" required>
+                </label>
+
+                <label>
+                    <span>Select Event *</span>
+                    <select style="height: 30px;width: 200px;" required>
+                        <option value="Summer Swimming Fest">Summer Event1</option>
+                        <option value="Music Night Live">Music Night Live</option>
+                        <option value="summer-event3">Summer Event3</option>
+                        <option value="summer-event4">Summer Event4</option>
+                        <option value="summer-event5">Summer Event5</option>
+                        <option value="summer-event6">Summer Event6</option>
+                    </select>
+                </label>
+                </div>
+                <div style="grid-column: span 2;width: 100%;">
+                <label>
+                    <span>Any message</span>
+                    <textarea style="width: 100%;margin-top: 10px;padding: 5px;" rows="6" cols="10" name="message"
+                        placeholder="message!"></textarea>
+                </label>
+                </div>
+                <div>
+                    <input  type="submit">
+                </div>
+            </form>
+            <div>
+                <p id="registration-msg">Fill the form & click on the submit!</p>
+            </div>
+        </section>
+        <!--Event feedback-->
+        <section id="event-feedback">
+            <h2>Event feedback</h2>
+            <form id="feedback-form">
+                <label>
+                    <span>Phone Number:</span>
+                    <input class="invalid" id="phone-number" type="text" placeholder="10-digit phone number"
+                        onblur="validatePhone()">
+                    <p id="invalid-msg" style="color: rgb(223, 34, 34);font-size: 10px;visibility: hidden;">Invalid
+                        phone number!</p>
+                </label>
+                <label>
+                    <span>Select Event *</span>
+                    <select id="feedback-event" name="eventName" style="height: 30px;width: 250px;" required
+                        onchange="handleEventChange()">
+                        <option value="">Choose event</option>
+                        <option value="Summer Swimming Fest">Summer Event1</option>
+                        <option value="Music Night Live">Music Night Live</option>
+                        <option value="summer-event3">Summer Event3</option>
+                        <option value="summer-event4">Summer Event4</option>
+                        <option value="summer-event5">Summer Event5</option>
+                        <option value="summer-event6">Summer Event6</option>
+                    </select>
+                    <p id="fee-msg" style="color: rgb(223, 163, 34);font-size: 10px;visibility: hidden;"></p>
+                </label>
+                <label>
+                    <span>Event Image</span>
+                    <img data-enlarged="false" id="feedback-img" style="margin: 10px;width: 200px;height: 120px;
+                    transition: 0.3s ease;" src="src/122-600x300.jpg" alt="event-image" ondblclick="enlargeImage()">
+                </label>
+                <label>
+                    <div id="feedback-textarea-label">
+                        <p style="align-self: flex-start;">Any message</p>
+                        <p id="feedback-textarea-charcount" style="align-self:baseline;font-size: 10px;">0/1000</p>
+                    </div>
+                    <!--onchange fires after the change has been done
+                    but oninput change fires immediatly after the input is changed 
+                    like here we need dynamicity , like value change must be immediate 
+                    as we type one character.-->
+                    <textarea id="feedback-textarea" style="width: 300px;margin-top: 10px;padding: 5px;" rows="6"
+                        cols="10" name="message" placeholder="message!" oninput="countCharacters()"></textarea>
+                </label>
+            </form>
+        </section>
+        <!--Event promo video-->
+        <section id="event-promo">
+            <label>
+                <video width='1000' height="400" controls oncanplay="handleVideoMessage()">
+                    <source src="src/mov_bbb.mp4" type="video/mp4">
+                </video>
+                <p id='video-play-message' style="visibility: hidden;">video can be played now!</p>
+            </label>
+        </section>
+        <!--Preference in ls and ss-->
+        <section id="preference-section">
+            <h2>Save your preference</h2>
+            <label>
+                <span>Select preferred event</span>
+                <select id="preference-event" name="eventName" style="height: 30px;width: 250px;" required
+                    onchange="handlePreferenceChange()">
+                    <option value="">Choose event</option>
+                    <option value="Summer Swimming Fest">Summer Event1</option>
+                    <option value="Music Night Live">Music Night Live</option>
+                    <option value="summer-event3">Summer Event3</option>
+                    <option value="summer-event4">Summer Event4</option>
+                    <option value="summer-event5">Summer Event5</option>
+                    <option value="summer-event6">Summer Event6</option>
+                </select>
+                <p id="preference-msg" style="color: rgb(223, 163, 34);font-size: 10px;visibility: hidden;">Restored
+                    preference from local storage</p>
+                <button onclick="clearPreference()">Clear Preference</button>
+            </label>
+        </section>
+        <!--Location-->
+        <section id="location-section">
+            <h2>View Nearby events</h2>
+            <button onclick="fetchCoordinates()">Find Nearby events</button>
+            <p id="location-info">Click above button to display current
+                coordinates</p>
+        </section>
+    </main>
+    <!--footer section-->
+    <footer></footer>
+
+
+
+    <script>
+        const events = [
+            { name: "Summer Swimming Fest", date: "2025-05-29", entryfee: 0 },
+            { name: "Music Night Live", date: "2025-06-05", entryfee: 150 },
+            { name: "Food & Culture Fair", date: "2025-06-12", entryfee: 50 },
+            { name: "Yoga & Wellness Camp", date: "2025-06-20", entryfee: 100 },
+            { name: "Tech Hackathon", date: "2025-07-01", entryfee: 200 },
+            { name: "Kids Art Workshop", date: "2025-07-10", entryfee: 75 },
+        ];
+
+        //  window.addEventListener('load',()=>{
+        //     const event = localStorage.getItem('event')
+        //     if(!event) return;
+        //     const preference = events.find(e=>e.name==event)
+        //     document.getElementById('feedback-event').value=preference?.name;
+        //  })
+
+        window.onload = () => {
+            const event = localStorage.getItem('event')
+            if (!event) return;
+            const preference = events.find(e => e.name == event)
+            document.getElementById('preference-event').value = preference?.name;
+            document.getElementById('preference-msg').style.visibility = 'visible'
+        }
+
+        //validate phone number on lossing focus .
+        function validatePhone() {
+            const phoneNumber = document.getElementById("phone-number").value.trim()
+            const warning = document.getElementById('invalid-msg')
+            const REGEX_PHONE = /^\d{10}$/;
+            if (phoneNumber.length == 0) {
+                warning.style.visibility = 'hidden';
+                return;
+            }
+            if (phoneNumber.length < 10) {
+                warning.style.visibility = 'visible';
+                return;
+            }
+            else if (!REGEX_PHONE.test(phoneNumber)) {
+                warning.style.visibility = 'visible';
+                return;
+            }
+            warning.style.visibility = 'hidden';
+        }
+
+        //display event fee based on event change
+        function handleEventChange() {
+            const event = document.getElementById('feedback-event').value.trim();
+            const message = document.getElementById('fee-msg')
+            if (!event) {
+                message.style.visibility = 'hidden';
+                message.textContent = '';
+                return;
+            }
+            const resEvent = events.find(e => e.name == event);
+            if (!resEvent) return;
+            const fee = resEvent.entryfee;
+            message.textContent = `Entry fee - ${fee}`;
+            message.style.visibility = 'visible';
+        }
+
+        function handleEventSubmit(e){
+            e.preventDefault();
+            const formElement = document.getElementById('register-form');
+            const formData = new FormData(e.target);
+            const element = document.getElementById('registration-msg');
+            //console.log(formData.get('name'))
+            element.textContent='registeration completed sucessfully!'
+        }
+
+        //functions enlarge the image on double click and v-v
+        function enlargeImage() {
+            const img = document.getElementById('feedback-img')
+            const isEnlarged = img.dataset.enlarged;
+            if (isEnlarged === "false") {
+                img.style.width = '250px';
+                img.style.height = '150px';
+                img.dataset.enlarged = 'true';
+            }
+            else {
+                img.style.width = '200px';
+                img.style.height = '120px';
+                img.dataset.enlarged = 'false'
+            }
+        }
+
+
+        //counts the characters in text area dynamically while typing
+        function countCharacters(e) {
+            const content = document.getElementById('feedback-textarea')
+            const element = document.getElementById('feedback-textarea-charcount')
+            element.textContent = `${content.value.length}/1000`;
+        }
+
+        //display msg when video is loaded and ready to play
+        function handleVideoMessage() {
+            const element = document.getElementById('video-play-message')
+            element.style.visibility = 'visible'
+        }
+
+        //this is blocked by browser
+        //onbeforeunload = (e)=>alert('Are you sure to leave the site?')
+        //window.addEventListener('beforeunload',alert('Are you sure to leave the site?'))
+
+        //set preference in local storage
+        function handlePreferenceChange() {
+            const event = document.getElementById('preference-event').value.trim()
+            localStorage.setItem('event', event)
+        }
+        //clears preference from local storage
+        function clearPreference() {
+            localStorage.removeItem('event')
+            const event = document.getElementById('preference-event').value = '';
+            document.getElementById('preference-msg').style.visibility = 'hidden'
+        }
+
+        const options = {
+            timeout: 5000,//request timeouts in 5s
+            enableHighAccuracy:true,//high accuracy mode
+            maxAge:0//always uses current values ,not caches
+        }
+        function success(position) {
+            const cord = position.coords;
+            const {latitude,longitude,accuracy}=cord
+            document.getElementById('location-info').innerHTML = `
+            <div><strong>Location found!</strong></div>
+            <div>Latitude: <span class="coord">${latitude}°</span></div>
+            <div>Longitude:<span class="coord">${longitude}°</span></div>
+            <div>Accuracy:<span class="coord">±${accuracy} m</span></div>
+            `
+        }
+        function err(error) {
+            let msg = '';
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              msg = 'Location access denied. Please allow location permission in your browser.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              msg = 'Location information unavailable.Try again later.';              break;
+            case error.TIMEOUT:
+              msg = 'Location request timed out (5s).Check your connection and retry.';
+              break;
+            default:
+              msg = 'An unknown error occurred.';
+          }
+          document.getElementById('location-info').innerHTML= `<span class="geo-error">${msg}</span>`;
+        }
+
+
+        //function to get users current coords 
+       function fetchCoordinates() {
+        //takes callbacks 1.success 2.failure 3.options(object)
+            navigator.geolocation.getCurrentPosition(success, err, options)
+        }
+    </script>
+</body>
+
+</html>
