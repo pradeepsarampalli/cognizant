@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base Template</title>
+
+    <!-- TASK 14: jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -90,7 +94,9 @@
         #event-feedback,
         #event-promo,
         #preference-section,
-        #location-section {
+        #location-section,
+        #search-filter-section,
+        #api-section {
             background: white;
             margin: 20px;
             padding: 25px;
@@ -113,9 +119,9 @@
             padding: 15px;
         }
 
-        #event-gallery-cards{
+        #event-gallery-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 10px;
         }
 
@@ -214,6 +220,53 @@
             font-weight: bold;
         }
 
+        /* TASK 8: Search & Filter */
+        #search-filter-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        #event-search {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            flex: 1;
+            min-width: 200px;
+            font-size: 14px;
+        }
+
+        #event-search:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        #category-filter {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            height: 40px;
+            font-size: 14px;
+        }
+
+        /* TASK 9: API section */
+        #api-spinner {
+            display: none;
+            color: #2563eb;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        #api-output {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f4ff;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
         /* Footer */
         footer {
             background: #1e293b;
@@ -223,6 +276,15 @@
             margin-top: 30px;
         }
 
+        /* TASK 14: jQuery fadeIn/Out button */
+        #jquery-toggle-btn {
+            background: #7c3aed;
+            margin-right: 8px;
+        }
+
+        #jquery-toggle-btn:hover {
+            background: #6d28d9;
+        }
     </style>
 </head>
 
@@ -239,14 +301,15 @@
             <a href="./help.html" target="_blank">Help</a>
         </nav>
     </header>
+
     <!--main section-->
     <main>
         <section id="home">
             <div style="background-color:rgb(109, 109, 236)" id="welcomeBanner">
                 <h1>Welcome to <span class="highlight">local community events page!</span></h1>
-                <p>A palce where the locality meets! Don't miss
+                <p>A place where the locality meets! Don't miss
                     the new offer -
-                    <span style="color: rgb(240, 147, 7);border-bottom:1px solid tomato">Special Swimming Fest -Free
+                    <span style="color: rgb(240, 147, 7);border-bottom:1px solid tomato">Special Swimming Fest - Free
                         Entry!</span>
                 </p>
                 <div>
@@ -255,14 +318,49 @@
                 </div>
             </div>
         </section>
+
         <section id="events"></section>
+
+        <!-- TASK 8: Search by name (keydown) and filter by category (onchange) -->
+        <section id="search-filter-section">
+            <input
+                type="text"
+                id="event-search"
+                placeholder="🔍 Search events by name (type to filter)..."
+            >
+            <select id="category-filter" onchange="filterByCategory()">
+                <option value="">All Categories</option>
+                <option value="music">Music</option>
+                <option value="sports">Sports</option>
+                <option value="culture">Culture</option>
+                <option value="wellness">Wellness</option>
+                <option value="tech">Tech</option>
+                <option value="art">Art</option>
+            </select>
+            <!-- TASK 14: jQuery fadeIn/fadeOut toggle -->
+            <button id="jquery-toggle-btn" onclick="jqueryToggleGallery()">Toggle Gallery (jQuery)</button>
+        </section>
+
         <section id="gallery">
             <div id="event-gallery">
                 <h3>Event Gallery</h3>
                 <div id="event-gallery-cards">
+                    <!-- Populated by JS via createElement() (Task 7) -->
                 </div>
             </div>
         </section>
+
+        <!-- TASK 9: Async fetch API section -->
+        <section id="api-section">
+            <h2>Events from API</h2>
+            <p style="font-size:13px;color:#666;margin-bottom:8px;">
+                Fetches mock event data asynchronously using async/await (Task 9)
+            </p>
+            <button onclick="fetchEventsFromAPI()">Reload from API</button>
+            <p id="api-spinner">⏳ Loading events from API...</p>
+            <div id="api-output">Click the button or wait for auto-load on page start.</div>
+        </section>
+
         <!--Event registration form-->
         <section id="register-event">
             <h2 style="text-align: left;">Register for Event</h2>
@@ -280,7 +378,7 @@
                 </div>
                 <div>
                     <label>
-                        <span>Prefered Date</span>
+                        <span>Preferred Date</span>
                         <input type="date" name="eventdate" required>
                     </label>
 
@@ -313,6 +411,7 @@
                 </output>
             </div>
         </section>
+
         <!--Event feedback-->
         <section id="event-feedback">
             <h2>Event feedback</h2>
@@ -350,10 +449,6 @@
                             <p style="align-self: flex-start;">Any message</p>
                             <p id="feedback-textarea-charcount" style="align-self:baseline;font-size: 10px;">0/1000</p>
                         </div>
-                        <!--onchange fires after the change has been done
-                    but oninput change fires immediatly after the input is changed 
-                    like here we need dynamicity , like value change must be immediate 
-                    as we type one character.-->
                         <textarea id="feedback-textarea" style="margin-top: 10px;padding: 5px;" rows="6" cols="10"
                             name="message" placeholder="message!" onkeyup="countCharacters()"></textarea>
                     </label>
@@ -366,6 +461,7 @@
                 </output>
             </form>
         </section>
+
         <!--Event promo video-->
         <section id="event-promo">
             <h2>Video section</h2>
@@ -376,6 +472,7 @@
                 <p id='video-play-message' style="visibility: hidden;">video can be played now!</p>
             </label>
         </section>
+
         <!--Preference in ls and ss-->
         <section id="preference-section">
             <h2>Save your preference</h2>
@@ -395,14 +492,15 @@
                 <button onclick="clearPreference()">Clear Preference</button>
             </label>
         </section>
+
         <!--Location-->
         <section id="location-section">
             <h2>View Nearby events</h2>
             <button onclick="fetchCoordinates()">Find Nearby events</button>
-            <p id="location-info">Click above button to display current
-                coordinates</p>
+            <p id="location-info">Click above button to display current coordinates</p>
         </section>
     </main>
+
     <!--footer section-->
     <footer>
         <section id="contact">
@@ -410,7 +508,42 @@
             <p>Email: community@example.com</p>
         </section>
     </footer>
-    <script src="main.js">
+
+    <script src="main.js"></script>
+
+    <!-- TASK 14: jQuery usage -->
+    <script>
+        // Task 14: jQuery click handler for Register Now button
+        $('#register').click(function () {
+            $('html, body').animate({ scrollTop: $('#register-event').offset().top }, 600);
+        });
+
+        // Task 14: jQuery click for Browse More
+        $('#browse').click(function () {
+            $('html, body').animate({ scrollTop: $('#gallery').offset().top }, 600);
+        });
+
+        // Task 14: fadeIn/fadeOut toggle for gallery cards
+        function jqueryToggleGallery() {
+            const cards = $('#event-gallery-cards');
+            if (cards.is(':visible')) {
+                cards.fadeOut(400);  // Task 14: .fadeOut()
+            } else {
+                cards.fadeIn(400);   // Task 14: .fadeIn()
+            }
+        }
+
+        // Task 8: onchange for category filter (also wired in main.js DOMContentLoaded)
+        function filterByCategory() {
+            const selected = document.getElementById('category-filter').value;
+            if (!selected) {
+                renderEventGallery();
+            } else {
+                filterEventsByCategory(selected, function (filtered) {
+                    renderEventGallery(filtered);
+                });
+            }
+        }
     </script>
 </body>
 
