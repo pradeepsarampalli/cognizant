@@ -1,0 +1,6 @@
+18:28:42 INFO  logging.AppenderExample - Application Started
+18:28:42 WARN  logging.AppenderExample - Low Memory
+18:28:42 ERROR logging.AppenderExample - Database Connection Failed
+18:30:27 INFO  logging.ParameterizedLogging - Name : Umesh
+18:30:27 INFO  logging.ParameterizedLogging - Age :21
+18:30:27 INFO  logging.ParameterizedLogging - Student : Umesh age :21
