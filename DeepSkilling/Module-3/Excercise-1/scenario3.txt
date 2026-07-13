@@ -1,0 +1,17 @@
+declare
+v_days number;
+v_customer customers%rowtype;
+cursor customer_cursor is select customerid,enddate from loans;
+begin
+for customer_record in customer_cursor loop
+v_days:= trunc(customer_record.enddate - sysdate);
+if v_days>=1 and v_days<=30 then
+select * into v_customer from customers where customerid=customer_record.customerid;
+DBMS_OUTPUT.PUT_LINE('Name :'|| v_customer.name || ' Your loan due in next 30 days ');
+end if;
+end loop;
+end;
+/
+
+
+

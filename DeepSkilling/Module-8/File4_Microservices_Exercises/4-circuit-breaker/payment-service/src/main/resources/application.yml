@@ -1,0 +1,38 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: payment-service
+
+# Simulated slow / unreliable third-party payment gateway
+third-party:
+  payment-api:
+    url: https://httpbin.org/delay/5   # deliberately slow endpoint for demo purposes
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      thirdPartyPayment:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 15s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  timelimiter:
+    instances:
+      thirdPartyPayment:
+        timeoutDuration: 3s
+        cancelRunningFuture: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,circuitbreakerevents
+  health:
+    circuitbreakers:
+      enabled: true

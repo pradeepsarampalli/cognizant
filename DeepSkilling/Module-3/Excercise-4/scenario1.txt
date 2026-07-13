@@ -1,0 +1,12 @@
+create or replace function CalculateAge(
+v_dob in date)
+return number
+is
+v_age number;
+begin
+v_age:= trunc(months_between(sysdate,v_dob)/12);
+return v_age;
+end;
+/
+
+# SELECT CalculateAge(TO_DATE('2005-08-28', 'YYYY-MM-DD')) AS age from dual;

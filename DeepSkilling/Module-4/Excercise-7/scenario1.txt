@@ -1,0 +1,43 @@
+create or replace package CustomerManagement as
+procedure addCustomer(v_id in number,v_name in varchar2,v_dob in date,v_balance in number);
+procedure updateCustomer(v_id in number,v_name in varchar2,v_balance in number);
+function getBalance(v_id in number) return number;
+end CustomerManagement;
+/
+
+create or replace package body CustomerManagement as 
+procedure addCustomer(v_id in number,v_name in varchar2,v_dob in date,v_balance in number)
+is
+v_isvip number(1);
+begin
+if v_balance>10000 then
+v_isvip:=1;
+else
+v_isvip:=0;
+end if;
+insert into customers values(v_id,v_name,v_dob,v_balance,sysdate,v_isvip);
+commit;
+exception 
+when dup_val_on_index then
+rollback;
+DBMS_OUTPUT.PUT_LINE('Id already existed');
+end addCustomer;
+procedure updateCustomer(v_id in number,v_name in varchar2,v_balance in number)
+is
+begin
+update customers set name=v_name where customerid=v_id;
+update customers set balance=v_balance where customerid=v_id;
+commit;
+end updateCustomer;
+function getBalance(v_id in number) return number
+is
+v_balance number;
+begin
+select balance into v_balance from customers where customerid=v_id;
+return v_balance;
+exception
+when no_data_found then 
+return -1;
+end getBalance;
+end CustomerManagement;
+/

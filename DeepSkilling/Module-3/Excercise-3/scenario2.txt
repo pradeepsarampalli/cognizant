@@ -1,0 +1,17 @@
+create or replace procedure UpdateEmployeeBonus(
+v_department in varchar2,
+v_percentage in number)
+is
+cursor employee_cursor is select employeeid from employees where department=v_department;
+begin
+for employee_record in employee_cursor loop
+update employees set salary = salary + (salary*(v_percentage/100)) 
+where employeeid = employee_record.employeeid;
+end loop;
+commit;
+exception
+when OTHERS then
+rollback;
+DBMS_OUTPUT.PUT_LINE('An error occured');
+end;
+/

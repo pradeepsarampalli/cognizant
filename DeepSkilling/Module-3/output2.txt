@@ -1,0 +1,150 @@
+SQL> set autocommit 1
+SQL> declare
+  2  cursor loan_cur is select loanid,loanamount from loans;
+  3  v_id number;
+  4  v_amount number;
+  5  begin
+  6  open loan_cur;
+  7  loop
+  8  fetch loan_cur into v_id,v_amount;
+  9  exit when loan_cur%notfound;
+ 10  if v_amount<10000 then
+ 11  update loans set interestrate=interestrate+1 where loanid=v_id;
+ 12  elsif v_amount>10000 and v_amount<50000 then
+ 13  update loans set interestrate=interestrate+0.8 where loanid=v_id;
+ 14  else
+ 15  update loans set interestrate=interestrate+0.5 where loanid=v_id;
+ 16  end if;
+ 17  end loop;
+ 18  close loan_cur;
+ 19  end;
+ 20  /
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> select * from loans;
+
+    LOANID CUSTOMERID LOANAMOUNT INTERESTRATE STARTDATE ENDDATE                 
+---------- ---------- ---------- ------------ --------- ---------               
+         1          1      50000            8 04-AUG-21 04-AUG-26               
+         2          2      20000          9.8 04-JUL-24 04-JUL-29               
+         3          3     100000            7 04-AUG-16 24-JUL-26               
+         4          4      30000         10.8 04-JUL-25 04-JUL-27               
+         5          5      75000          8.5 04-AUG-21 09-JUL-26               
+         6          6      45000          6.8 04-JAN-26 04-JUL-28               
+         7          8      90000            7 04-AUG-21 01-AUG-26               
+
+7 rows selected.
+
+SQL> declare
+  2  cursor loan_cur is select loanid,loanamount from loans;
+  3  v_id number;
+  4  v_amount number;
+  5  begin
+  6  open loan_cur;
+  7  loop
+  8  fetch loan_cur into v_id,v_amount;
+  9  exit when loan_cur%notfound;
+ 10  if v_amount<10000 then
+ 11  update loans set interestrate=interestrate+1 where loanid=v_id;
+ 12  elsif v_amount>10000 and v_amount<50000 then
+ 13  update loans set interestrate=interestrate+0.8 where loanid=v_id;
+ 14  else
+ 15  update loans set interestrate=interestrate+0.5 where loanid=v_id;
+ 16  end if;
+ 17  end loop;
+ 18  close loan_cur;
+ 19  end;
+ 20  /
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> select * from loans;
+
+    LOANID CUSTOMERID LOANAMOUNT INTERESTRATE STARTDATE ENDDATE                 
+---------- ---------- ---------- ------------ --------- ---------               
+         1          1      50000          8.5 04-AUG-21 04-AUG-26               
+         2          2      20000         10.6 04-JUL-24 04-JUL-29               
+         3          3     100000          7.5 04-AUG-16 24-JUL-26               
+         4          4      30000         11.6 04-JUL-25 04-JUL-27               
+         5          5      75000            9 04-AUG-21 09-JUL-26               
+         6          6      45000          7.6 04-JAN-26 04-JUL-28               
+         7          8      90000          7.5 04-AUG-21 01-AUG-26               
+
+7 rows selected.
+
+SQL> desc customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+ ISVIP                                              NUMBER(1)
+
+SQL> create or replace package CustomerManagement as
+  2  procedure addCustomer(v_id in number,v_name in varchar2,v_dob in date,v_balance in number);
+  3  procedure updateCustomer(v_id in number,v_name in varchar2,v_balance in number);
+  4  function getBalance(v_id in number) return number;
+  5  end CustomerManagement;
+  6  /
+
+Package created.
+
+SQL> create or replace package body CustomerManagement as
+  2  procedure addCustomer(v_id in number,v_name in varchar2,v_dob in date,v_balance in number)
+  3  is
+  4  v_isvip number(1);
+  5  begin
+  6  if v_balance>10000 then
+  7  v_isvip:=1;
+  8  else
+  9  v_isvip:=0;
+ 10  end if;
+ 11  insert into customers values(v_id,v_name,v_dob,v_balance,sysdate,v_isvip);
+ 12  commit;
+ 13  exception
+ 14  when dup_val_on_index then
+ 15  rollback;
+ 16  DBMS_OUTPUT.PUT_LINE('Id already existed');
+ 17  end addCustomer;
+ 18  procedure updateCustomer(v_id in number,v_name in varchar2,v_balance in number)
+ 19  is
+ 20  begin
+ 21  update customers set name=v_name where customerid=v_id;
+ 22  update customers set balance=v_balance where customerid=v_id;
+ 23  commit;
+ 24  end updateCustomer;
+ 25  function getBalance(v_id in number) return number
+ 26  is
+ 27  v_balance number;
+ 28  begin
+ 29  select balance into v_balance from customers where customerid=v_id;
+ 30  return v_balance;
+ 31  exception
+ 32  when no_data_found then
+ 33  return -1;
+ 34  end getBalance;
+ 35  end CustomerManagement;
+ 36  /
+
+Package body created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc employees;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ POSITION                                           VARCHAR2(50)
+ SALARY                                             NUMBER
+ DEPARTMENT                                         VARCHAR2(50)
+ HIREDATE                                           DATE
+
+SQL> 

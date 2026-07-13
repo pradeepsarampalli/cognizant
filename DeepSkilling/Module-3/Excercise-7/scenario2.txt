@@ -1,0 +1,46 @@
+create or replace package EmployeeManagement as
+procedure addEmployee(v_id in number,v_name in varchar2,v_position in varchar2,
+v_salary in number,v_dept in varchar2,v_hiredate in date);
+procedure updateEmployee(v_id in number,v_name in varchar2,v_position in varchar2,v_salary in number);
+function calculateAnnualSalary(v_id in number) return number;
+end EmployeeManagement;
+/
+
+create or replace package body EmployeeManagement is
+procedure addEmployee(v_id in number,v_name in varchar2,v_position in varchar2,
+v_salary in number,v_dept in varchar2,v_hiredate in date) is
+begin
+insert into employees
+values(v_id,v_name,v_position,v_salary,v_dept,v_hiredate);
+exception
+when dup_val_on_index then
+DBMS_OUTPUT.PUT_LINE('Employee with given id already in db');
+end addEmployee;
+procedure updateEmployee(v_id in number,v_name in varchar2,v_position in varchar2,v_salary in number) is
+begin
+update employees
+set name=v_name,
+    position=v_position,
+    salary=v_salary
+where employeeid=v_id;
+if sql%rowcount=0 then
+DBMS_OUTPUT.PUT_LINE('Employee not found');
+end if;
+end updateEmployee;
+function calculateAnnualSalary(v_id in number) return number
+is
+v_salary number;
+begin
+select salary into v_salary
+from employees
+where employeeid=v_id;
+v_salary:=v_salary*12;
+return v_salary;
+exception
+when no_data_found then
+DBMS_OUTPUT.PUT_LINE('No employee with given id found');
+return -1;
+end calculateAnnualSalary;
+end EmployeeManagement;
+/
+

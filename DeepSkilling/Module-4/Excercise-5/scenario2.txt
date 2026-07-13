@@ -1,0 +1,13 @@
+create or replace trigger LogTransaction
+after
+insert
+on transactions
+for each row
+begin
+insert into auditlog(auditid,transactionid,accountid,amount,transactiontype,logdate)
+values(audit_seq.nextval,:NEW.transactionid,:NEW.accountid,:NEW.amount,:NEW.transactiontype,
+sysdate);
+end;
+/
+
+

@@ -1,0 +1,21 @@
+create or replace function CalculateMonthlyInstallment(
+v_amount in number,
+v_rate in number,
+v_duration in number)
+return number
+is
+v_monthly_rate number;
+v_total_months number;
+v_emi number;
+begin
+v_monthly_rate:=(v_rate/12)/100;
+v_total_months:=v_duration*12;
+if v_monthly_rate=0 then
+v_emi:=v_amount/v_total_months;
+else
+v_emi:=v_amount*v_monthly_rate*power(1+v_monthly_rate,v_total_months)/
+(power(1+v_monthly_rate,v_total_months)-1);
+end if;
+return round(v_emi,2);
+end;
+/

@@ -1,0 +1,48 @@
+package com.example.mockdeps;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+/**
+ * Exercise 1: Mocking a Service Dependency in a Controller Test
+ *
+ * @WebMvcTest loads only the web layer (UserController). The UserService
+ * dependency is replaced with a Mockito mock via @MockBean, so no real
+ * database or business logic runs - we're purely testing the controller.
+ */
+@WebMvcTest(UserController.class)
+public class UserControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private UserService userService;
+
+    @Test
+    public void testGetUser_returnsUserFromMockedService() throws Exception {
+        User mockUser = new User(1L, "Pradeep");
+        when(userService.getUserById(1L)).thenReturn(mockUser);
+
+        mockMvc.perform(get("/users/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Pradeep"));
+    }
+
+    @Test
+    public void testGetUser_userNotFound_returnsNullBody() throws Exception {
+        when(userService.getUserById(99L)).thenReturn(null);
+
+        mockMvc.perform(get("/users/99"))
+                .andExpect(status().isOk());
+    }
+}

@@ -1,0 +1,16 @@
+declare
+cursor ac_cursor is select accountid from accounts;
+v_id number;
+v_maintainancefee number:=385;
+begin
+open ac_cursor;
+loop
+fetch ac_cursor into v_id;
+exit when ac_cursor%notfound;
+update accounts set balance=balance-v_maintainancefee
+where accountid=v_id;
+end loop;
+commit;
+close ac_cursor;
+end;
+/

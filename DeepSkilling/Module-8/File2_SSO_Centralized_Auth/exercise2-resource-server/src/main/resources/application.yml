@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: resource-server
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://issuer.example.com
+          # Alternatively, if the issuer doesn't support discovery:
+          # jwk-set-uri: https://issuer.example.com/.well-known/jwks.json

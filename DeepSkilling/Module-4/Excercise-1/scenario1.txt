@@ -1,0 +1,18 @@
+declare
+v_id int;
+v_age int;
+cursor customer_cursor is select customerid,dob from customers;
+begin
+for customer_record in customer_cursor loop
+v_age:=floor(months_between(sysdate,customer_record.dob)/12);
+if v_age>60 then
+v_id:=customer_record.customerid;
+update loans set interestrate=interestrate-1.0 where customerid=v_id;
+end if;
+end loop;
+commit;
+end;
+/
+
+
+

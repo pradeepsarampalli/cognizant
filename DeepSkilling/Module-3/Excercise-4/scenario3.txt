@@ -1,0 +1,19 @@
+create or replace function HasSufficientBalance(
+v_accountid in number,
+v_amount in number)
+return Number
+is
+v_balance number;
+begin
+select balance into v_balance from accounts where accountid=v_accountid;
+if v_balance>v_amount then
+return 1;
+else
+return 0;
+end if;
+exception
+when NO_DATA_FOUND then
+DBMS_OUTPUT.PUT_LINE('No account found with given id');
+return -1;
+end;
+/

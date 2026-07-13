@@ -1,0 +1,29 @@
+create or replace procedure SafeTransferFunds(
+v_did in number,
+v_cid in number,
+v_amount in number)
+is
+v_balance number;
+insuffcient_exception Exception;
+begin
+select balance into v_balance from accounts where customerid=v_did;
+if v_balance<v_amount then
+rollback;
+raise insuffcient_exception;
+end if;
+update accounts set balance=balance-v_amount where customerid=v_did;
+update accounts set balance=balance+v_amount where customerid=v_cid;
+DBMS_OUTPUT.PUT_LINE('Transaction sucessfully completed!');
+commit;
+exception
+when insuffcient_exception then
+DBMS_OUTPUT.PUT_LINE('Insufficient funds transaction halted');
+when NO_DATA_FOUND then
+DBMS_OUTPUT.PUT_LINE('Sender account not found');
+when OTHERS then
+rollback;
+DBMS_OUTPUT.PUT_LINE('Unexpected error occured');
+end;
+/
+
+

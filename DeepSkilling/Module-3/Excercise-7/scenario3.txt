@@ -1,0 +1,47 @@
+create or replace package AccountOperations as
+procedure openAccount(v_id in number,v_customerid in number,v_accounttype in varchar2,
+v_balance in number,v_lastmodified in date);
+procedure closeAccount(v_id in number);
+function getAmount(v_customerid in number) return number;
+end AccountOperations;
+/
+
+
+create or replace package body AccountOperations as
+procedure openAccount(v_id in number,v_customerid in number,v_accounttype in varchar2,
+v_balance in number,v_lastmodified in date) 
+is
+begin
+insert into accounts values(v_id,v_customerid,v_accounttype,v_balance,v_lastmodified);
+commit;
+exception
+when dup_val_on_index then
+rollback;
+DBMS_OUTPUT.PUT_LINE('Account with given id exsists');
+end openAccount;
+
+procedure closeAccount(v_id in number) 
+is
+begin
+delete from accounts where accountid=v_id;
+commit;
+if sql%rowcount=0 then
+DBMS_OUTPUT.PUT_LINE('No account found');
+end if;
+end closeAccount;
+
+function getAmount(v_customerid IN NUMBER)
+RETURN NUMBER
+IS
+    v_totalamount NUMBER;
+BEGIN
+    SELECT NVL(SUM(balance),0)
+    INTO v_totalamount
+    FROM accounts
+    WHERE customerid=v_customerid;
+
+    RETURN v_totalamount;
+END getAmount;
+
+end AccountOperations;
+/

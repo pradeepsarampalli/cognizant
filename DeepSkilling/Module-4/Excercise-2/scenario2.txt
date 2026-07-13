@@ -1,0 +1,19 @@
+create or replace procedure updateSalary(
+v_employeeid in number,
+v_percentage in number)
+is
+v_id number;
+no_employee exception;
+begin
+select employeeid into v_id from employees where employeeid=v_employeeid;
+update employees set salary = salary+(salary*(v_percentage/100))
+where employeeid = v_id;
+commit;
+exception
+when NO_DATA_FOUND then
+DBMS_OUTPUT.PUT_LINE('No employee found with given id');
+when OTHERS then
+rollback;
+DBMS_OUTPUT.PUT_LINE('Unexpected error occured');
+end;
+/

@@ -1,0 +1,24 @@
+--example policy is if loan amount < 10k update intrest as +1%
+-- if >10k and <50k update as +0.8%
+-- if >50k update as +0.5%
+declare
+cursor loan_cur is select loanid,loanamount from loans;
+v_id number;
+v_amount number;
+begin
+open loan_cur;
+loop
+fetch loan_cur into v_id,v_amount;
+exit when loan_cur%notfound;
+if v_amount<10000 then
+update loans set interestrate=interestrate+1 where loanid=v_id;
+elsif v_amount>10000 and v_amount<50000 then
+update loans set interestrate=interestrate+0.8 where loanid=v_id;
+else
+update loans set interestrate=interestrate+0.5 where loanid=v_id;
+end if;
+end loop;
+close loan_cur;
+end;
+/
+

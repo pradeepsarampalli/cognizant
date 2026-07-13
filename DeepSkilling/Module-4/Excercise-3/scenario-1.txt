@@ -1,0 +1,15 @@
+create or replace procedure ProcessMonthlyInterest
+is
+cursor account_cursor is select accountid from accounts where accounttype='Savings';
+begin
+for account_record in account_cursor loop
+update accounts set balance=balance-(balance*0.01)
+where accountid=account_record.accountid;
+end loop;
+commit;
+exception
+when OTHERS then
+rollback;
+DBMS_OUTPUT.PUT_LINE('An error occured');
+end;
+/

@@ -1,0 +1,20 @@
+create or replace trigger CheckTransactionRules
+before insert on transactions
+for each row
+is
+v_balance number;
+begin
+if :NEW.transactiontype='deposit' and :NEW.amount<0 then
+raise_application_error(-20010,'amount cannot be -ve');
+end if;
+if :NEW.transactiontype='withdraw' and :NEW.amount<0 then
+raise_application_error(-20011,'amount cannot be -ve');
+end if;
+if :NEW.transactiontype='withdraw' and :NEW.amount>0 then
+select balance into v_balance from accounts where accountid=:NEW.accountid;
+if v_balance<:NEW.amount then
+raise_application_error(-20012,'low balance');
+end if;
+end if;
+end;
+/

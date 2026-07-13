@@ -1,0 +1,13 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: jwt-auth
+
+app:
+  jwt:
+    # Must be a Base64-encoded key >= 256 bits for HS256. Generate your own
+    # for real use, e.g.: openssl rand -base64 32
+    secret: "cmVwbGFjZS10aGlzLXdpdGgtYS1yZWFsLTI1Ni1iaXQtc2VjcmV0LWtleSE="
+    expiration-ms: 3600000

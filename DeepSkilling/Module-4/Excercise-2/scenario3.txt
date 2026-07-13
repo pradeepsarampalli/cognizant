@@ -1,0 +1,27 @@
+create or replace procedure AddNewCustomer(
+v_customerid in number,
+v_name in varchar2,
+v_dob in date,
+v_balance in number)
+is
+v_isvip number(1);
+begin
+if v_balance>10000 then
+v_isvip:=1;
+else
+v_isvip:=0;
+end if;
+INSERT INTO customers (customerid, name, dob, balance, lastmodified, isVip)
+VALUES (v_customerid, v_name, v_dob, v_balance, SYSDATE, v_isvip);
+commit;
+exception                                      
+when DUP_VAL_ON_INDEX then
+rollback;
+DBMS_OUTPUT.PUT_LINE('Customer with given id already exsisted');
+when OTHERS then
+rollback;
+DBMS_OUTPUT.PUT_LINE('Unexpected error has occured!');
+end;
+/
+
+

@@ -1,0 +1,2227 @@
+SQL> CREATE TABLE Customers (
+  2      CustomerID NUMBER PRIMARY KEY,
+  3      Name VARCHAR2(100),
+  4      DOB DATE,
+  5      Balance NUMBER,
+  6      LastModified DATE
+  7  );
+
+Table created.
+
+SQL> CREATE TABLE Accounts (
+  2      AccountID NUMBER PRIMARY KEY,
+  3      CustomerID NUMBER,
+  4      AccountType VARCHAR2(20),
+  5      Balance NUMBER,
+  6      LastModified DATE,
+  7      FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+  8  );
+
+Table created.
+
+SQL> CREATE TABLE Transactions (
+  2      TransactionID NUMBER PRIMARY KEY,
+  3      AccountID NUMBER,
+  4      TransactionDate DATE,
+  5      Amount NUMBER,
+  6      TransactionType VARCHAR2(10),
+  7      FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
+  8  );
+
+Table created.
+
+SQL> CREATE TABLE Loans (
+  2      LoanID NUMBER PRIMARY KEY,
+  3      CustomerID NUMBER,
+  4      LoanAmount NUMBER,
+  5      InterestRate NUMBER,
+  6      StartDate DATE,
+  7      EndDate DATE,
+  8      FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+  9  );
+
+Table created.
+
+SQL> CREATE TABLE Employees (
+  2      EmployeeID NUMBER PRIMARY KEY,
+  3      Name VARCHAR2(100),
+  4      Position VARCHAR2(50),
+  5      Salary NUMBER,
+  6      Department VARCHAR2(50),
+  7      HireDate DATE
+  8  );
+
+Table created.
+
+SQL> INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+  2  VALUES (1, 'John Doe', TO_DATE('1985-05-15', 'YYYY-MM-DD'), 1000, SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+  2  VALUES (2, 'Jane Smith', TO_DATE('1990-07-20', 'YYYY-MM-DD'), 1500, SYSDATE);
+
+1 row created.
+
+SQL> NSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+SP2-0734: unknown command beginning "NSERT INTO..." - rest of line ignored.
+SQL> VALUES (1, 1, 'Savings', 1000, SYSDATE);
+SP2-0734: unknown command beginning "VALUES (1,..." - rest of line ignored.
+SQL> INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+  2  VALUES (1, 1, 'Savings', 1000, SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+  2  VALUES (2, 2, 'Checking', 1500, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (1, 1, SYSDATE, 200, 'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (2, 2, SYSDATE, 300, 'Withdrawal');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Loans (LoanID, CustomerID, LoanAmount, InterestRate, StartDate, EndDate)
+  2  VALUES (1, 1, 5000, 5, SYSDATE, ADD_MONTHS(SYSDATE, 60));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Employees (EmployeeID, Name, Position, Salary, Department, HireDate)
+  2  VALUES (1, 'Alice Johnson', 'Manager', 70000, 'HR', TO_DATE('2015-06-15', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Employees (EmployeeID, Name, Position, Salary, Department, HireDate)
+  2  VALUES (2, 'Bob Brown', 'Developer', 60000, 'IT', TO_DATE('2017-03-20', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+  2  VALUES (3, 'Michael Scott', TO_DATE('1982-11-18', 'YYYY-MM-DD'), 2500, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+  2  VALUES (4, 'Sarah Williams', TO_DATE('1995-04-09', 'YYYY-MM-DD'), 3200, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+  2  VALUES (5, 'David Miller', TO_DATE('1988-01-25', 'YYYY-MM-DD'), 4500, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+  2  VALUES (6, 'Emily Davis', TO_DATE('1993-09-14', 'YYYY-MM-DD'), 1800, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+  2  VALUES (7, 'Chris Wilson', TO_DATE('1986-12-03', 'YYYY-MM-DD'), 5200, SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+  2  VALUES (3, 3, 'Savings', 2500, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+  2  VALUES (4, 4, 'Checking', 3200, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+  2  VALUES (5, 5, 'Savings', 4500, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+  2  VALUES (6, 6, 'Checking', 1800, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance, LastModified)
+  2  VALUES (7, 7, 'Savings', 5200, SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (3, 3, SYSDATE-10, 500, 'Deposit');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (4, 3, SYSDATE-5, 200, 'Withdrawal');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (5, 4, SYSDATE-8, 1000, 'Deposit');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (6, 5, SYSDATE-4, 700, 'Deposit');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (7, 6, SYSDATE-3, 300, 'Withdrawal');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (8, 7, SYSDATE-1, 1200, 'Deposit');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (9, 5, SYSDATE, 400, 'Withdrawal');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+  2  VALUES (10, 7, SYSDATE, 600, 'Withdrawal');
+
+1 row created.
+
+SQL> INSERT INTO Loans (LoanID, CustomerID, LoanAmount, InterestRate, StartDate, EndDate)
+  2  VALUES (2, 3, 10000, 6.5, SYSDATE-365, ADD_MONTHS(SYSDATE-365, 84));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Loans (LoanID, CustomerID, LoanAmount, InterestRate, StartDate, EndDate)
+  2  VALUES (3, 4, 7500, 5.75, SYSDATE-180, ADD_MONTHS(SYSDATE-180, 60));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Loans (LoanID, CustomerID, LoanAmount, InterestRate, StartDate, EndDate)
+  2  VALUES (4, 5, 15000, 7.25, SYSDATE-500, ADD_MONTHS(SYSDATE-500, 120));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Loans (LoanID, CustomerID, LoanAmount, InterestRate, StartDate, EndDate)
+  2  VALUES (5, 7, 9000, 6.0, SYSDATE-90, ADD_MONTHS(SYSDATE-90, 48));
+
+1 row created.
+
+SQL> INSERT INTO Employees (EmployeeID, Name, Position, Salary, Department, HireDate)
+  2  VALUES (3, 'Carol White', 'Accountant', 55000, 'Finance', TO_DATE('2018-08-10', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Employees (EmployeeID, Name, Position, Salary, Department, HireDate)
+  2  VALUES (4, 'Daniel Green', 'Cashier', 40000, 'Operations', TO_DATE('2020-02-18', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Employees (EmployeeID, Name, Position, Salary, Department, HireDate)
+  2  VALUES (5, 'Sophia Taylor', 'Loan Officer', 65000, 'Loans', TO_DATE('2016-11-01', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Employees (EmployeeID, Name, Position, Salary, Department, HireDate)
+  2  VALUES (6, 'James Anderson', 'Developer', 72000, 'IT', TO_DATE('2019-07-15', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Employees (EmployeeID, Name, Position, Salary, Department, HireDate)
+  2  VALUES (7, 'Olivia Thomas', 'HR Executive', 50000, 'HR', TO_DATE('2021-04-12', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> truncate table customers;
+truncate table customers
+               *
+ERROR at line 1:
+ORA-02266: unique/primary keys in table referenced by enabled foreign keys 
+
+
+SQL> drop table employees;
+
+Table dropped.
+
+SQL> drop table loans;
+
+Table dropped.
+
+SQL> drop table transactions;
+
+Table dropped.
+
+SQL> drop table accounts;
+
+Table dropped.
+
+SQL> drop table customers;
+
+Table dropped.
+
+SQL> CREATE TABLE Customers (
+  2      CustomerID NUMBER PRIMARY KEY,
+  3      Name VARCHAR2(100),
+  4      DOB DATE,
+  5      Balance NUMBER,
+  6      LastModified DATE
+  7  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Accounts (
+  2      AccountID NUMBER PRIMARY KEY,
+  3      CustomerID NUMBER,
+  4      AccountType VARCHAR2(20),
+  5      Balance NUMBER,
+  6      LastModified DATE,
+  7      FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+  8  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Transactions (
+  2      TransactionID NUMBER PRIMARY KEY,
+  3      AccountID NUMBER,
+  4      TransactionDate DATE,
+  5      Amount NUMBER,
+  6      TransactionType VARCHAR2(10),
+  7      FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
+  8  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Loans (
+  2      LoanID NUMBER PRIMARY KEY,
+  3      CustomerID NUMBER,
+  4      LoanAmount NUMBER,
+  5      InterestRate NUMBER,
+  6      StartDate DATE,
+  7      EndDate DATE,
+  8      FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+  9  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Employees (
+  2      EmployeeID NUMBER PRIMARY KEY,
+  3      Name VARCHAR2(100),
+  4      Position VARCHAR2(50),
+  5      Salary NUMBER,
+  6      Department VARCHAR2(50),
+  7      HireDate DATE
+  8  );
+
+Table created.
+
+SQL> INSERT INTO Customers VALUES (1,'John Doe',TO_DATE('1955-05-15','YYYY-MM-DD'),12000,SYSDATE);   -- Senior + VIP
+  2  INSERT INTO Customers VALUES (2,'Jane Smith',TO_DATE('1990-07-20','YYYY-MM-DD'),1500,SYSDATE);
+INSERT INTO Customers VALUES (1,'John Doe',TO_DATE('1955-05-15','YYYY-MM-DD'),12000,SYSDATE);   -- Senior + VIP
+                                                                                            *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> INSERT INTO Customers VALUES (3,'Michael Scott',TO_DATE('1960-03-18','YYYY-MM-DD'),18000,SYSDATE); -- Senior + VIP
+  2  INSERT INTO Customers VALUES (4,'Sarah Williams',TO_DATE('1995-04-09','YYYY-MM-DD'),9000,SYSDATE);
+INSERT INTO Customers VALUES (3,'Michael Scott',TO_DATE('1960-03-18','YYYY-MM-DD'),18000,SYSDATE); -- Senior + VIP
+                                                                                                 *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> INSERT INTO Customers VALUES (5,'David Miller',TO_DATE('1988-01-25','YYYY-MM-DD'),22000,SYSDATE); -- VIP
+  2  INSERT INTO Customers VALUES (6,'Emily Davis',TO_DATE('1948-11-14','YYYY-MM-DD'),14000,SYSDATE); -- Senior + VIP
+  3  INSERT INTO Customers VALUES (7,'Chris Wilson',TO_DATE('1998-12-03','YYYY-MM-DD'),4500,SYSDATE);
+INSERT INTO Customers VALUES (5,'David Miller',TO_DATE('1988-01-25','YYYY-MM-DD'),22000,SYSDATE); -- VIP
+                                                                                                *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> INSERT INTO Customers VALUES (1,'John Doe',TO_DATE('1955-05-15','YYYY-MM-DD'),12000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (2,'Jane Smith',TO_DATE('1990-07-20','YYYY-MM-DD'),1500,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (3,'Michael Scott',TO_DATE('1960-03-18','YYYY-MM-DD'),18000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (4,'Sarah Williams',TO_DATE('1995-04-09','YYYY-MM-DD'),9000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (5,'David Miller',TO_DATE('1988-01-25','YYYY-MM-DD'),22000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (6,'Emily Davis',TO_DATE('1948-11-14','YYYY-MM-DD'),14000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (7,'Chris Wilson',TO_DATE('1998-12-03','YYYY-MM-DD'),4500,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (8,'Sophia Thomas',TO_DATE('1972-09-08','YYYY-MM-DD'),30000,SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Accounts VALUES (101,1,'Savings',12000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (102,1,'Checking',3000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (103,2,'Savings',1500,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (104,3,'Savings',18000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (105,3,'Checking',4000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (106,4,'Checking',9000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (107,5,'Savings',22000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (108,6,'Savings',14000,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (109,7,'Checking',4500,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO Accounts VALUES (110,8,'Savings',30000,SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Transactions VALUES (1,101,SYSDATE-20,500,'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (2,101,SYSDATE-10,1000,'Withdrawal');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (3,102,SYSDATE-8,250,'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (4,103,SYSDATE-6,300,'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (5,104,SYSDATE-15,700,'Withdrawal');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (6,105,SYSDATE-2,500,'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (7,106,SYSDATE-4,1000,'Withdrawal');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (8,107,SYSDATE-12,1200,'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (9,108,SYSDATE-1,400,'Withdrawal');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (10,109,SYSDATE,600,'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (11,110,SYSDATE,2000,'Deposit');
+
+1 row created.
+
+SQL> INSERT INTO Transactions VALUES (12,107,SYSDATE-3,500,'Withdrawal');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Loans VALUES (1,1,50000,8.5,ADD_MONTHS(SYSDATE,-59),ADD_MONTHS(SYSDATE,1));
+
+1 row created.
+
+SQL> INSERT INTO Loans VALUES (2,2,20000,9,ADD_MONTHS(SYSDATE,-24),ADD_MONTHS(SYSDATE,36));
+
+1 row created.
+
+SQL> INSERT INTO Loans VALUES (3,3,100000,7.5,ADD_MONTHS(SYSDATE,-119),SYSDATE+20);
+
+1 row created.
+
+SQL> INSERT INTO Loans VALUES (4,4,30000,10,ADD_MONTHS(SYSDATE,-12),ADD_MONTHS(SYSDATE,12));
+
+1 row created.
+
+SQL> INSERT INTO Loans VALUES (5,5,75000,8,ADD_MONTHS(SYSDATE,-59),SYSDATE+5);
+
+1 row created.
+
+SQL> INSERT INTO Loans VALUES (6,6,45000,7,ADD_MONTHS(SYSDATE,-6),ADD_MONTHS(SYSDATE,24));
+
+1 row created.
+
+SQL> INSERT INTO Loans VALUES (7,8,90000,6.5,ADD_MONTHS(SYSDATE,-59),SYSDATE+28);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Employees VALUES (1,'Alice Johnson','Manager',70000,'HR',TO_DATE('2015-06-15','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (2,'Bob Brown','Developer',60000,'IT',TO_DATE('2017-03-20','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (3,'Carol White','Developer',65000,'IT',TO_DATE('2019-01-10','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (4,'David Green','Accountant',55000,'Finance',TO_DATE('2018-05-11','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (5,'Emma Taylor','HR Executive',50000,'HR',TO_DATE('2020-09-21','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (6,'Frank Martin','Loan Officer',62000,'Loans',TO_DATE('2021-07-12','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (7,'Grace Lee','Developer',72000,'IT',TO_DATE('2016-02-14','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (8,'Henry Adams','Cashier',45000,'Operations',TO_DATE('2022-03-19','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> select * from customers limit 5;
+select * from customers limit 5
+                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from customers where rownum<5;
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+         1                                                                      
+John Doe                                                                        
+15-MAY-55      12000 04-JUL-26                                                  
+                                                                                
+         2                                                                      
+Jane Smith                                                                      
+20-JUL-90       1500 04-JUL-26                                                  
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+                                                                                
+         3                                                                      
+Michael Scott                                                                   
+18-MAR-60      18000 04-JUL-26                                                  
+                                                                                
+         4                                                                      
+Sarah Williams                                                                  
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+09-APR-95       9000 04-JUL-26                                                  
+                                                                                
+
+SQL> desc customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+
+SQL> desc loans;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ LOANID                                    NOT NULL NUMBER
+ CUSTOMERID                                         NUMBER
+ LOANAMOUNT                                         NUMBER
+ INTERESTRATE                                       NUMBER
+ STARTDATE                                          DATE
+ ENDDATE                                            DATE
+
+SQL> select * from loans where rownum<3;
+
+    LOANID CUSTOMERID LOANAMOUNT INTERESTRATE STARTDATE ENDDATE                 
+---------- ---------- ---------- ------------ --------- ---------               
+         1          1      50000          8.5 04-AUG-21 04-AUG-26               
+         2          2      20000            9 04-JUL-24 04-JUL-29               
+
+SQL> declare
+  2  v_id int;
+  3  v_age int;
+  4  cursor customer_cursor is select customerid,dob from customers;
+  5  begin
+  6  for customer_record in customer_cursor loop
+  7  v_age:=floor(months_between(sysdate,customer_record.dob)/12);
+  8  if v_age>60 then
+  9  v_id:=customer_record.customerid;
+ 10  update loans set interestrate=interestrate-1.0 where customerid=v_id;
+ 11  end if;
+ 12  end loop;
+ 13  commit;
+ 14  end;
+ 15  /
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from loans;
+
+    LOANID CUSTOMERID LOANAMOUNT INTERESTRATE STARTDATE ENDDATE                 
+---------- ---------- ---------- ------------ --------- ---------               
+         1          1      50000          7.5 04-AUG-21 04-AUG-26               
+         2          2      20000            9 04-JUL-24 04-JUL-29               
+         3          3     100000          6.5 04-AUG-16 24-JUL-26               
+         4          4      30000           10 04-JUL-25 04-JUL-27               
+         5          5      75000            8 04-AUG-21 09-JUL-26               
+         6          6      45000            6 04-JAN-26 04-JUL-28               
+         7          8      90000          6.5 04-AUG-21 01-AUG-26               
+
+7 rows selected.
+
+SQL> select * from customers;
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+         1                                                                      
+John Doe                                                                        
+15-MAY-55      12000 04-JUL-26                                                  
+                                                                                
+         2                                                                      
+Jane Smith                                                                      
+20-JUL-90       1500 04-JUL-26                                                  
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+                                                                                
+         3                                                                      
+Michael Scott                                                                   
+18-MAR-60      18000 04-JUL-26                                                  
+                                                                                
+         4                                                                      
+Sarah Williams                                                                  
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+09-APR-95       9000 04-JUL-26                                                  
+                                                                                
+         5                                                                      
+David Miller                                                                    
+25-JAN-88      22000 04-JUL-26                                                  
+                                                                                
+         6                                                                      
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+Emily Davis                                                                     
+14-NOV-48      14000 04-JUL-26                                                  
+                                                                                
+         7                                                                      
+Chris Wilson                                                                    
+03-DEC-98       4500 04-JUL-26                                                  
+                                                                                
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF                                                  
+--------- ---------- ---------                                                  
+         8                                                                      
+Sophia Thomas                                                                   
+08-SEP-72      30000 04-JUL-26                                                  
+                                                                                
+
+8 rows selected.
+
+SQL> desc customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+
+SQL> alter table customers add isVip Number(1);
+
+Table altered.
+
+SQL> desc customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+ ISVIP                                              NUMBER(1)
+
+SQL> declare
+  2  cursor customer_cursor is select * from customers;
+  3  begin
+  4  for customer_record in customer_cursor loop
+  5  if customer_record.balance>10000 then
+  6  update customers set isVip=1 where customerid=customer_record.customerid;
+  7  end if;
+  8  end loop;
+  9  end;
+ 10  /
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from customers;
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+         1                                                                      
+John Doe                                                                        
+15-MAY-55      12000 04-JUL-26          1                                       
+                                                                                
+         2                                                                      
+Jane Smith                                                                      
+20-JUL-90       1500 04-JUL-26                                                  
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+                                                                                
+         3                                                                      
+Michael Scott                                                                   
+18-MAR-60      18000 04-JUL-26          1                                       
+                                                                                
+         4                                                                      
+Sarah Williams                                                                  
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+09-APR-95       9000 04-JUL-26                                                  
+                                                                                
+         5                                                                      
+David Miller                                                                    
+25-JAN-88      22000 04-JUL-26          1                                       
+                                                                                
+         6                                                                      
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+Emily Davis                                                                     
+14-NOV-48      14000 04-JUL-26          1                                       
+                                                                                
+         7                                                                      
+Chris Wilson                                                                    
+03-DEC-98       4500 04-JUL-26                                                  
+                                                                                
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+         8                                                                      
+Sophia Thomas                                                                   
+08-SEP-72      30000 04-JUL-26          1                                       
+                                                                                
+
+8 rows selected.
+
+SQL> declare
+  2  cursor customer_cursor is select * from customers;
+  3  begin
+  4  for customer_record in customer_cursor loop
+  5  if customer_record.balance>10000 then
+  6  update customers set isVip=1 where customerid=customer_record.customerid;
+  7  else
+  8  update customers set isVip=0 where customerid=customer_record.customerid;
+  9  end if;
+ 10  end loop;
+ 11  end;
+ 12  /
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> select * from customers;
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+         1                                                                      
+John Doe                                                                        
+15-MAY-55      12000 04-JUL-26          1                                       
+                                                                                
+         2                                                                      
+Jane Smith                                                                      
+20-JUL-90       1500 04-JUL-26          0                                       
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+                                                                                
+         3                                                                      
+Michael Scott                                                                   
+18-MAR-60      18000 04-JUL-26          1                                       
+                                                                                
+         4                                                                      
+Sarah Williams                                                                  
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+09-APR-95       9000 04-JUL-26          0                                       
+                                                                                
+         5                                                                      
+David Miller                                                                    
+25-JAN-88      22000 04-JUL-26          1                                       
+                                                                                
+         6                                                                      
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+Emily Davis                                                                     
+14-NOV-48      14000 04-JUL-26          1                                       
+                                                                                
+         7                                                                      
+Chris Wilson                                                                    
+03-DEC-98       4500 04-JUL-26          0                                       
+                                                                                
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+         8                                                                      
+Sophia Thomas                                                                   
+08-SEP-72      30000 04-JUL-26          1                                       
+                                                                                
+
+8 rows selected.
+
+SQL> desc customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+ ISVIP                                              NUMBER(1)
+
+SQL> desc loans;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ LOANID                                    NOT NULL NUMBER
+ CUSTOMERID                                         NUMBER
+ LOANAMOUNT                                         NUMBER
+ INTERESTRATE                                       NUMBER
+ STARTDATE                                          DATE
+ ENDDATE                                            DATE
+
+SQL> declare
+  2  v_days number;
+  3  v_customer customers%rowtype;
+  4  cursor customer_cursor is select customerid,enddate from loans;
+  5  begin
+  6  for customer_record in customer_cursor loop
+  7  v_days:= trunc(customer_record.enddate - sysdate);
+  8  if v_days>=1 and v_days<=30 then
+  9  select * into v_customer from customers where customerid=customer_record.customerid;
+ 10  DBMS_OUTPUT.PUT_LINE('Name :'|| v_customer.name || ' Your loan due in next 30 days ');
+ 11  end if;
+ 12  end loop;
+ 13  end;
+ 14  /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on;
+SQL> declare
+  2  v_days number;
+  3  v_customer customers%rowtype;
+  4  cursor customer_cursor is select customerid,enddate from loans;
+  5  begin
+  6  for customer_record in customer_cursor loop
+  7  v_days:= trunc(customer_record.enddate - sysdate);
+  8  if v_days>=1 and v_days<=30 then
+  9  select * into v_customer from customers where customerid=customer_record.customerid;
+ 10  DBMS_OUTPUT.PUT_LINE('Name :'|| v_customer.name || ' Your loan due in next 30 days ');
+ 11  end if;
+ 12  end loop;
+ 13  end;
+ 14  /
+Name :John Doe Your loan due in next 30 days                                    
+Name :Michael Scott Your loan due in next 30 days                               
+Name :David Miller Your loan due in next 30 days                                
+Name :Sophia Thomas Your loan due in next 30 days                               
+
+PL/SQL procedure successfully completed.
+
+SQL> desc customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+ ISVIP                                              NUMBER(1)
+
+SQL> desc accounts;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ACCOUNTID                                 NOT NULL NUMBER
+ CUSTOMERID                                         NUMBER
+ ACCOUNTTYPE                                        VARCHAR2(20)
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+
+SQL> create or replace procedure SafeTransferFunds(
+  2  v_did in number,
+  3  v_cid in number,
+  4  v_amount in number)
+  5  is
+  6  v_balance number;
+  7  insuffcient_exception Exception;
+  8  begin
+  9  select balance into v_balance from accounts where customerid=v_did;
+ 10  if v_balance<v_amount then
+ 11  rollback;
+ 12  raise insuffcient_exception;
+ 13  end if;
+ 14  update accounts set balance=balance-v_amount where customerid=v_did;
+ 15  update accounts set balance=balance+v_amount where customerid=v_cid;
+ 16  commit;
+ 17  exception
+ 18  when insuffcient_exception then
+ 19  DBMS_OUTPUT.PUT_LINE('Insufficient funds transaction halted');
+ 20  when NO_DATA_FOUND then
+ 21  DBMS_OUTPUT.PUT_LINE('Sender account not found');
+ 22  when OTHERS then
+ 23  rollback;
+ 24  DBMS_OUTPUT.PUT_LINE('Unexpected error occured');
+ 25  end;
+ 26  /
+
+Procedure created.
+
+SQL> 
+SQL> 
+SQL> create or replace procedure SafeTransferFunds(
+  2  v_did in number,
+  3  v_cid in number,
+  4  v_amount in number)
+  5  is
+  6  v_balance number;
+  7  insuffcient_exception Exception;
+  8  begin
+  9  select balance into v_balance from accounts where customerid=v_did;
+ 10  if v_balance<v_amount then
+ 11  rollback;
+ 12  raise insuffcient_exception;
+ 13  end if;
+ 14  update accounts set balance=balance-v_amount where customerid=v_did;
+ 15  update accounts set balance=balance+v_amount where customerid=v_cid;
+ 16  DBMS_OUTPUT.PUT_LINE('Transaction sucessfully completed!');
+ 17  commit;
+ 18  exception
+ 19  when insuffcient_exception then
+ 20  DBMS_OUTPUT.PUT_LINE('Insufficient funds transaction halted');
+ 21  when NO_DATA_FOUND then
+ 22  DBMS_OUTPUT.PUT_LINE('Sender account not found');
+ 23  when OTHERS then
+ 24  rollback;
+ 25  DBMS_OUTPUT.PUT_LINE('Unexpected error occured');
+ 26  end;
+ 27  /
+
+Procedure created.
+
+SQL> 
+SQL> 
+SQL> select * from account;
+select * from account
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> select * from accounts;
+
+ ACCOUNTID CUSTOMERID ACCOUNTTYPE             BALANCE LASTMODIF                 
+---------- ---------- -------------------- ---------- ---------                 
+       101          1 Savings                   12000 04-JUL-26                 
+       102          1 Checking                   3000 04-JUL-26                 
+       103          2 Savings                    1500 04-JUL-26                 
+       104          3 Savings                   18000 04-JUL-26                 
+       105          3 Checking                   4000 04-JUL-26                 
+       106          4 Checking                   9000 04-JUL-26                 
+       107          5 Savings                   22000 04-JUL-26                 
+       108          6 Savings                   14000 04-JUL-26                 
+       109          7 Checking                   4500 04-JUL-26                 
+       110          8 Savings                   30000 04-JUL-26                 
+
+10 rows selected.
+
+SQL> call safeTransferFunds(110,109,5000);
+Sender account not found                                                        
+
+Call completed.
+
+SQL> call safeTransferFunds(8,7,5000);
+Transaction sucessfully completed!                                              
+
+Call completed.
+
+SQL> select * from accounts;
+
+ ACCOUNTID CUSTOMERID ACCOUNTTYPE             BALANCE LASTMODIF                 
+---------- ---------- -------------------- ---------- ---------                 
+       101          1 Savings                   12000 04-JUL-26                 
+       102          1 Checking                   3000 04-JUL-26                 
+       103          2 Savings                    1500 04-JUL-26                 
+       104          3 Savings                   18000 04-JUL-26                 
+       105          3 Checking                   4000 04-JUL-26                 
+       106          4 Checking                   9000 04-JUL-26                 
+       107          5 Savings                   22000 04-JUL-26                 
+       108          6 Savings                   14000 04-JUL-26                 
+       109          7 Checking                   9500 04-JUL-26                 
+       110          8 Savings                   25000 04-JUL-26                 
+
+10 rows selected.
+
+SQL> desc employees;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ POSITION                                           VARCHAR2(50)
+ SALARY                                             NUMBER
+ DEPARTMENT                                         VARCHAR2(50)
+ HIREDATE                                           DATE
+
+SQL> select * from employees;
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         1                                                                      
+Alice Johnson                                                                   
+Manager                                                 70000                   
+HR                                                 15-JUN-15                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         2                                                                      
+Bob Brown                                                                       
+Developer                                               60000                   
+IT                                                 20-MAR-17                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         3                                                                      
+Carol White                                                                     
+Developer                                               65000                   
+IT                                                 10-JAN-19                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         4                                                                      
+David Green                                                                     
+Accountant                                              55000                   
+Finance                                            11-MAY-18                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         5                                                                      
+Emma Taylor                                                                     
+HR Executive                                            50000                   
+HR                                                 21-SEP-20                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         6                                                                      
+Frank Martin                                                                    
+Loan Officer                                            62000                   
+Loans                                              12-JUL-21                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         7                                                                      
+Grace Lee                                                                       
+Developer                                               72000                   
+IT                                                 14-FEB-16                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         8                                                                      
+Henry Adams                                                                     
+Cashier                                                 45000                   
+Operations                                         19-MAR-22                    
+                                                                                
+
+8 rows selected.
+
+SQL> create or replace procedure updateSalary(
+  2  v_employeeid in number,
+  3  v_percentage in number)
+  4  is
+  5  v_id number;
+  6  no_employee exception;
+  7  begin
+  8  select employeeid into v_id from employees where employeeid=v_employeeid;
+  9  update employees set salary = salary+(salary*(v_percentage/100))
+ 10  where employeeid = v_id;
+ 11  commit;
+ 12  exception
+ 13  when NO_DATA_FOUND then
+ 14  DBMS_OUTPUT.PUT_LINE('No employee found with given id');
+ 15  when OTHERS then
+ 16  rollback;
+ 17  DBMS_OUTPUT.PUT_LINE('Unexpected error occured');
+ 18  end;
+ 19  /
+
+Procedure created.
+
+SQL> call updateSalary(8,10);
+
+Call completed.
+
+SQL> select * from employees;
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         1                                                                      
+Alice Johnson                                                                   
+Manager                                                 70000                   
+HR                                                 15-JUN-15                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         2                                                                      
+Bob Brown                                                                       
+Developer                                               60000                   
+IT                                                 20-MAR-17                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         3                                                                      
+Carol White                                                                     
+Developer                                               65000                   
+IT                                                 10-JAN-19                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         4                                                                      
+David Green                                                                     
+Accountant                                              55000                   
+Finance                                            11-MAY-18                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         5                                                                      
+Emma Taylor                                                                     
+HR Executive                                            50000                   
+HR                                                 21-SEP-20                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         6                                                                      
+Frank Martin                                                                    
+Loan Officer                                            62000                   
+Loans                                              12-JUL-21                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         7                                                                      
+Grace Lee                                                                       
+Developer                                               72000                   
+IT                                                 14-FEB-16                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         8                                                                      
+Henry Adams                                                                     
+Cashier                                                 49500                   
+Operations                                         19-MAR-22                    
+                                                                                
+
+8 rows selected.
+
+SQL> desc customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+ ISVIP                                              NUMBER(1)
+
+SQL> create or replace procedure AddNewCustomer(
+  2  v_customerid in number,
+  3  v_name in varchar2,
+  4  v_dob in date,
+  5  v_balance in number)
+  6  is
+  7  v_isvip number(1);
+  8  begin
+  9  if v_balance>10000 then
+ 10  v_isvip:=1;
+ 11  else
+ 12  v_isvip:=0;
+ 13  end if;
+ 14  INSERT INTO customers (customerid, name, dob, balance, lastmodified, isVip)
+ 15  VALUES (v_customerid, v_name, v_dob, v_balance, SYSDATE, v_isvip);
+ 16  commit;
+ 17  exception
+ 18  when DUP_VAL_ON_INDEX then
+ 19  rollback;
+ 20  DBMS_OUTPUT.PUT_LINE('Customer with given id already exsisted');
+ 21  when OTHERS then
+ 22  rollback;
+ 23  DBMS_OUTPUT.PUT_LINE('Unexpected error has occured!');
+ 24  end;
+ 25  /
+
+Procedure created.
+
+SQL> 
+SQL> 
+SQL> select count(*) from customers;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         8                                                                      
+
+SQL> call AddNewProcedure(9,'Pradeep Sarampalli',to_date('2005-08-28','yy-mm-dd'),45000);
+call AddNewProcedure(9,'Pradeep Sarampalli',to_date('2005-08-28','yy-mm-dd'),45000)
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> call AddNewCustomer(9,'Pradeep Sarampalli',to_date('2005-08-28','yy-mm-dd'),45000);
+
+Call completed.
+
+SQL> select * from customers where customerid=9;
+
+CUSTOMERID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+DOB          BALANCE LASTMODIF      ISVIP                                       
+--------- ---------- --------- ----------                                       
+         9                                                                      
+Pradeep Sarampalli                                                              
+28-AUG-05      45000 04-JUL-26          1                                       
+                                                                                
+
+SQL> call AddNewCustomer(9,'Pradeep Sarampalli',to_date('2005-08-28','yy-mm-dd'),45000);
+Customer with given id already exsisted                                         
+
+Call completed.
+
+SQL> desc accounts;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ACCOUNTID                                 NOT NULL NUMBER
+ CUSTOMERID                                         NUMBER
+ ACCOUNTTYPE                                        VARCHAR2(20)
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+
+SQL> select * from accounts;
+
+ ACCOUNTID CUSTOMERID ACCOUNTTYPE             BALANCE LASTMODIF                 
+---------- ---------- -------------------- ---------- ---------                 
+       101          1 Savings                   12000 04-JUL-26                 
+       102          1 Checking                   3000 04-JUL-26                 
+       103          2 Savings                    1500 04-JUL-26                 
+       104          3 Savings                   18000 04-JUL-26                 
+       105          3 Checking                   4000 04-JUL-26                 
+       106          4 Checking                   9000 04-JUL-26                 
+       107          5 Savings                   22000 04-JUL-26                 
+       108          6 Savings                   14000 04-JUL-26                 
+       109          7 Checking                   9500 04-JUL-26                 
+       110          8 Savings                   25000 04-JUL-26                 
+
+10 rows selected.
+
+SQL> create or replace procedure ProcessMonthlyInterest
+  2  is
+  3  cursor account_cursor is select accountid from accounts where accounttype='savings';
+  4  begin
+  5  for account_record in account_cursor loop
+  6  update accounts set balance=balance-(balance*0.01)
+  7  where accountid=account_record.accountid;
+  8  end loop;
+  9  commit;
+ 10  exception
+ 11  when OTHERS then
+ 12  rollback;
+ 13  DBMS_OUTPUT.PUT_LINE('An error occured');
+ 14  end;
+ 15  /
+
+Procedure created.
+
+SQL> call ProcessMonthlyIntrest();
+call ProcessMonthlyIntrest()
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> call ProcessMonthlyInterest();
+
+Call completed.
+
+SQL> select * from accounts;
+
+ ACCOUNTID CUSTOMERID ACCOUNTTYPE             BALANCE LASTMODIF                 
+---------- ---------- -------------------- ---------- ---------                 
+       101          1 Savings                   12000 04-JUL-26                 
+       102          1 Checking                   3000 04-JUL-26                 
+       103          2 Savings                    1500 04-JUL-26                 
+       104          3 Savings                   18000 04-JUL-26                 
+       105          3 Checking                   4000 04-JUL-26                 
+       106          4 Checking                   9000 04-JUL-26                 
+       107          5 Savings                   22000 04-JUL-26                 
+       108          6 Savings                   14000 04-JUL-26                 
+       109          7 Checking                   9500 04-JUL-26                 
+       110          8 Savings                   25000 04-JUL-26                 
+
+10 rows selected.
+
+SQL> create or replace procedure ProcessMonthlyInterest
+  2  is
+  3  cursor account_cursor is select accountid from accounts where accounttype='Savings';
+  4  begin
+  5  for account_record in account_cursor loop
+  6  update accounts set balance=balance-(balance*0.01)
+  7  where accountid=account_record.accountid;
+  8  end loop;
+  9  commit;
+ 10  exception
+ 11  when OTHERS then
+ 12  rollback;
+ 13  DBMS_OUTPUT.PUT_LINE('An error occured');
+ 14  end;
+ 15  /
+
+Procedure created.
+
+SQL> select * from accounts;
+
+ ACCOUNTID CUSTOMERID ACCOUNTTYPE             BALANCE LASTMODIF                 
+---------- ---------- -------------------- ---------- ---------                 
+       101          1 Savings                   12000 04-JUL-26                 
+       102          1 Checking                   3000 04-JUL-26                 
+       103          2 Savings                    1500 04-JUL-26                 
+       104          3 Savings                   18000 04-JUL-26                 
+       105          3 Checking                   4000 04-JUL-26                 
+       106          4 Checking                   9000 04-JUL-26                 
+       107          5 Savings                   22000 04-JUL-26                 
+       108          6 Savings                   14000 04-JUL-26                 
+       109          7 Checking                   9500 04-JUL-26                 
+       110          8 Savings                   25000 04-JUL-26                 
+
+10 rows selected.
+
+SQL> call ProcessMonthlyInterest();
+
+Call completed.
+
+SQL> select * from accounts;
+
+ ACCOUNTID CUSTOMERID ACCOUNTTYPE             BALANCE LASTMODIF                 
+---------- ---------- -------------------- ---------- ---------                 
+       101          1 Savings                   11880 04-JUL-26                 
+       102          1 Checking                   3000 04-JUL-26                 
+       103          2 Savings                    1485 04-JUL-26                 
+       104          3 Savings                   17820 04-JUL-26                 
+       105          3 Checking                   4000 04-JUL-26                 
+       106          4 Checking                   9000 04-JUL-26                 
+       107          5 Savings                   21780 04-JUL-26                 
+       108          6 Savings                   13860 04-JUL-26                 
+       109          7 Checking                   9500 04-JUL-26                 
+       110          8 Savings                   24750 04-JUL-26                 
+
+10 rows selected.
+
+SQL> desc employees;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ POSITION                                           VARCHAR2(50)
+ SALARY                                             NUMBER
+ DEPARTMENT                                         VARCHAR2(50)
+ HIREDATE                                           DATE
+
+SQL> create or replace procedure UpdateEmployeeBonus(
+  2  v_department in varchar2,
+  3  v_percentage in number)
+  4  is
+  5  cursor employee_cursor is select employeeid from employees where department=v_department;
+  6  begin
+  7  for employee_record in employee_cursor loop
+  8  update employees set salary = salary + (salary*(v_percentage/100))
+  9  where employeeid = employee_record.employeeid;
+ 10  end loop;
+ 11  commit;
+ 12  exception
+ 13  when OTHERS then
+ 14  rollback;
+ 15  DBMS_OUTPUT.PUT_LINE('An error occured');
+ 16  end;
+ 17  /
+
+Procedure created.
+
+SQL> select * from employees;
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         1                                                                      
+Alice Johnson                                                                   
+Manager                                                 70000                   
+HR                                                 15-JUN-15                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         2                                                                      
+Bob Brown                                                                       
+Developer                                               60000                   
+IT                                                 20-MAR-17                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         3                                                                      
+Carol White                                                                     
+Developer                                               65000                   
+IT                                                 10-JAN-19                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         4                                                                      
+David Green                                                                     
+Accountant                                              55000                   
+Finance                                            11-MAY-18                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         5                                                                      
+Emma Taylor                                                                     
+HR Executive                                            50000                   
+HR                                                 21-SEP-20                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         6                                                                      
+Frank Martin                                                                    
+Loan Officer                                            62000                   
+Loans                                              12-JUL-21                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         7                                                                      
+Grace Lee                                                                       
+Developer                                               72000                   
+IT                                                 14-FEB-16                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         8                                                                      
+Henry Adams                                                                     
+Cashier                                                 49500                   
+Operations                                         19-MAR-22                    
+                                                                                
+
+8 rows selected.
+
+SQL> call UpdateEmployeeBonus('IT',10);
+
+Call completed.
+
+SQL> select * from employees;
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         1                                                                      
+Alice Johnson                                                                   
+Manager                                                 70000                   
+HR                                                 15-JUN-15                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         2                                                                      
+Bob Brown                                                                       
+Developer                                               66000                   
+IT                                                 20-MAR-17                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         3                                                                      
+Carol White                                                                     
+Developer                                               71500                   
+IT                                                 10-JAN-19                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         4                                                                      
+David Green                                                                     
+Accountant                                              55000                   
+Finance                                            11-MAY-18                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         5                                                                      
+Emma Taylor                                                                     
+HR Executive                                            50000                   
+HR                                                 21-SEP-20                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         6                                                                      
+Frank Martin                                                                    
+Loan Officer                                            62000                   
+Loans                                              12-JUL-21                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         7                                                                      
+Grace Lee                                                                       
+Developer                                               79200                   
+IT                                                 14-FEB-16                    
+                                                                                
+
+EMPLOYEEID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+POSITION                                               SALARY                   
+-------------------------------------------------- ----------                   
+DEPARTMENT                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+         8                                                                      
+Henry Adams                                                                     
+Cashier                                                 49500                   
+Operations                                         19-MAR-22                    
+                                                                                
+
+8 rows selected.
+
+SQL> create or replace function CalculateAge(
+  2  v_dob in date)
+  3  return number
+  4  is
+  5  v_age number;
+  6  begin
+  7  v_age:= trunc(months_between(sysdate,v_dob)/12);
+  8  return v_age;
+  9  end;
+ 10  /
+
+Function created.
+
+SQL> call CalculateAge(To_date('2005-08-28','yy-mm-dd'));
+call CalculateAge(To_date('2005-08-28','yy-mm-dd'))
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> select call CalculateAge(To_date('2005-08-28','yy-mm-dd'));
+select call CalculateAge(To_date('2005-08-28','yy-mm-dd'))
+                        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT CalculateAge(TO_DATE('2005-08-28', 'YYYY-MM-DD')) AS age;
+SELECT CalculateAge(TO_DATE('2005-08-28', 'YYYY-MM-DD')) AS age
+                                                              *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT CalculateAge(TO_DATE('2005-08-28', 'YYYY-MM-DD')) AS age from dual;
+
+       AGE                                                                      
+----------                                                                      
+        20                                                                      
+
+SQL> create or replace function CalculateMonthlyInstallment(
+  2  v_amount in number,
+  3  v_rate in number,
+  4  v_duration in number)
+  5  return number
+  6  is
+  7  v_monthly_rate number;
+  8  v_total_months number;
+  9  v_emi number;
+ 10  begin
+ 11  v_monthly_rate:=(v_rate/12)/100;
+ 12  v_total_months:=v_duration*12;
+ 13  if v_monthly_rate=0 then
+ 14  v_emi:=v_amount/v_total_months;
+ 15  else
+ 16  v_emi:=v_amount*v_monthly_rate*power(1+v_monthly_rate,v_total_months)/
+ 17  (power(1+v_monthly_rate,v_total_months)-1);
+ 18  end if;
+ 19  return round(v_emi,2);
+ 20  end;
+ 21  /
+
+Function created.
+
+SQL> select CalculateMonthlyInstallment(3000,6,3) from dual;
+
+CALCULATEMONTHLYINSTALLMENT(3000,6,3)                                           
+-------------------------------------                                           
+                                91.27                                           
+
+SQL> create or repalce function HasSufficientBalance(
+  2  v_accountid in number,
+  3  v_amount in number)
+  4  return Number
+  5  is
+  6  begin
+  7  v_balance number;
+create or repalce function HasSufficientBalance(
+          *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> select balance into v_balance from accounts where accountid=v_accountid;
+select balance into v_balance from accounts where accountid=v_accountid
+                                                            *
+ERROR at line 1:
+ORA-00904: "V_ACCOUNTID": invalid identifier 
+
+
+SQL> if v_balance<v_amount then
+SP2-0734: unknown command beginning "if v_balan..." - rest of line ignored.
+SQL> return 1;
+SP2-0042: unknown command "return 1" - rest of line ignored.
+SQL> else
+SP2-0042: unknown command "else" - rest of line ignored.
+SQL> return 0;
+SP2-0042: unknown command "return 0" - rest of line ignored.
+SP2-0044: For a list of known commands enter HELP
+and to leave enter EXIT.
+SQL> end if;
+SP2-0042: unknown command "end if" - rest of line ignored.
+SQL> exception
+SP2-0042: unknown command "exception" - rest of line ignored.
+SQL> when NO_DATA_FOUND then
+SP2-0734: unknown command beginning "when NO_DA..." - rest of line ignored.
+SQL> DBMS_OUTPUT.PUT_LINE('No account found with given id');
+SP2-0734: unknown command beginning "DBMS_OUTPU..." - rest of line ignored.
+SP2-0044: For a list of known commands enter HELP
+and to leave enter EXIT.
+SQL> return -1;
+SP2-0042: unknown command "return -1" - rest of line ignored.
+SQL> end;
+SP2-0042: unknown command "end" - rest of line ignored.
+SQL> /
+select balance into v_balance from accounts where accountid=v_accountid
+                                                            *
+ERROR at line 1:
+ORA-00904: "V_ACCOUNTID": invalid identifier 
+
+
+SQL> create or replace function HasSufficientBalance(
+  2  v_accountid in number,
+  3  v_amount in number)
+  4  return Number
+  5  is
+  6  v_balance number;
+  7  begin
+  8  select balance into v_balance from accounts where accountid=v_accountid;
+  9  if v_balance<v_amount then
+ 10  return 1;
+ 11  else
+ 12  return 0;
+ 13  end if;
+ 14  exception
+ 15  when NO_DATA_FOUND then
+ 16  DBMS_OUTPUT.PUT_LINE('No account found with given id');
+ 17  return -1;
+ 18  end;
+ 19  /
+
+Function created.
+
+SQL> select * from accounts;
+
+ ACCOUNTID CUSTOMERID ACCOUNTTYPE             BALANCE LASTMODIF                 
+---------- ---------- -------------------- ---------- ---------                 
+       101          1 Savings                   11880 04-JUL-26                 
+       102          1 Checking                   3000 04-JUL-26                 
+       103          2 Savings                    1485 04-JUL-26                 
+       104          3 Savings                   17820 04-JUL-26                 
+       105          3 Checking                   4000 04-JUL-26                 
+       106          4 Checking                   9000 04-JUL-26                 
+       107          5 Savings                   21780 04-JUL-26                 
+       108          6 Savings                   13860 04-JUL-26                 
+       109          7 Checking                   9500 04-JUL-26                 
+       110          8 Savings                   24750 04-JUL-26                 
+
+10 rows selected.
+
+SQL> select HasSufficientFunds(101,10000) from dual;
+select HasSufficientFunds(101,10000) from dual
+       *
+ERROR at line 1:
+ORA-00904: "HASSUFFICIENTFUNDS": invalid identifier 
+
+
+SQL> select HasSufficientBalance(101,10000) from dual;
+
+HASSUFFICIENTBALANCE(101,10000)                                                 
+-------------------------------                                                 
+                              0                                                 
+
+SQL> create or replace function HasSufficientBalance(
+  2  v_accountid in number,
+  3  v_amount in number)
+  4  return Number
+  5  is
+  6  v_balance number;
+  7  begin
+  8  select balance into v_balance from accounts where accountid=v_accountid;
+  9  if v_balance>v_amount then
+ 10  return 1;
+ 11  else
+ 12  return 0;
+ 13  end if;
+ 14  exception
+ 15  when NO_DATA_FOUND then
+ 16  DBMS_OUTPUT.PUT_LINE('No account found with given id');
+ 17  return -1;
+ 18  end;
+ 19  /
+
+Function created.
+
+SQL> select HasSufficientBalance(101,10000) from dual;
+
+HASSUFFICIENTBALANCE(101,10000)                                                 
+-------------------------------                                                 
+                              1                                                 
+
+SQL> DESC customers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(100)
+ DOB                                                DATE
+ BALANCE                                            NUMBER
+ LASTMODIFIED                                       DATE
+ ISVIP                                              NUMBER(1)
+
+SQL> create or replace trigger UpdateCustomerLastModified
+  2  before update on customers
+  3  for each row
+  4  begin
+  5  :NEW.lastmodifieD:=sysdate;
+  6  end;
+  7  /
+
+Trigger created.
+
+SQL> update customers set name='S Pradeep' where customerid=9;
+
+1 row updated.
+
+SQL> select lastmodified from customer where customerid=9;
+select lastmodified from customer where customerid=9
+                         *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> select lastmodified from customers where customerid=9;
+
+LASTMODIF                                                                       
+---------                                                                       
+04-JUL-26                                                                       
+
+SQL> CREATE TABLE AuditLog
+  2  (
+  3      AuditID NUMBER PRIMARY KEY,
+  4      TransactionID NUMBER,
+  5      AccountID NUMBER,
+  6      Amount NUMBER,
+  7      TransactionType VARCHAR2(10),
+  8      LogDate DATE
+  9  );
+
+Table created.
+
+SQL> desc auditlog;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ AUDITID                                   NOT NULL NUMBER
+ TRANSACTIONID                                      NUMBER
+ ACCOUNTID                                          NUMBER
+ AMOUNT                                             NUMBER
+ TRANSACTIONTYPE                                    VARCHAR2(10)
+ LOGDATE                                            DATE
+
+SQL> desc transactions;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TRANSACTIONID                             NOT NULL NUMBER
+ ACCOUNTID                                          NUMBER
+ TRANSACTIONDATE                                    DATE
+ AMOUNT                                             NUMBER
+ TRANSACTIONTYPE                                    VARCHAR2(10)
+
+SQL> CREATE SEQUENCE AuditLog_Seq
+  2  START WITH 1
+  3  INCREMENT BY 1;
+
+Sequence created.
+
+SQL> create or replace trigger LogTransaction
+  2  after
+  3  insert
+  4  on transactions
+  5  begin
+  6  insert into auditlog(transactionid,accountid,amount,transactiontype,logdate)
+  7  values(:OLD.transactionid,:OLD.accountid,:OLD.amount,:OLD.transactiontype,
+  8  sysdate);
+  9  end;
+ 10  /
+create or replace trigger LogTransaction
+                          *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers 
+
+
+SQL> create or replace trigger LogTransaction
+  2  after
+  3  insert
+  4  on transactions
+  5  for each row
+  6  begin
+  7  insert into auditlog(transactionid,accountid,amount,transactiontype,logdate)
+  8  values(:OLD.transactionid,:OLD.accountid,:OLD.amount,:OLD.transactiontype,
+  9  sysdate);
+ 10  end;
+ 11  /
+
+Trigger created.
+
+SQL> select * from transactions;
+
+TRANSACTIONID  ACCOUNTID TRANSACTI     AMOUNT TRANSACTIO                        
+------------- ---------- --------- ---------- ----------                        
+            1        101 14-JUN-26        500 Deposit                           
+            2        101 24-JUN-26       1000 Withdrawal                        
+            3        102 26-JUN-26        250 Deposit                           
+            4        103 28-JUN-26        300 Deposit                           
+            5        104 19-JUN-26        700 Withdrawal                        
+            6        105 02-JUL-26        500 Deposit                           
+            7        106 30-JUN-26       1000 Withdrawal                        
+            8        107 22-JUN-26       1200 Deposit                           
+            9        108 03-JUL-26        400 Withdrawal                        
+           10        109 04-JUL-26        600 Deposit                           
+           11        110 04-JUL-26       2000 Deposit                           
+
+TRANSACTIONID  ACCOUNTID TRANSACTI     AMOUNT TRANSACTIO                        
+------------- ---------- --------- ---------- ----------                        
+           12        107 01-JUL-26        500 Withdrawal                        
+
+12 rows selected.
+
+SQL> insert into transactios(13,101,sysdate,3000,'Deposit');
+insert into transactios(13,101,sysdate,3000,'Deposit')
+                        *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword 
+
+
+SQL> insert into transactios values(13,101,sysdate,3000,'Deposit');
+insert into transactios values(13,101,sysdate,3000,'Deposit')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into transactions values(13,101,sysdate,3000,'Deposit');
+insert into transactions values(13,101,sysdate,3000,'Deposit')
+            *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SYSTEM"."AUDITLOG"."AUDITID") 
+ORA-06512: at "SYSTEM.LOGTRANSACTION", line 2 
+ORA-04088: error during execution of trigger 'SYSTEM.LOGTRANSACTION' 
+
+
+SQL> create or replace trigger LogTransaction
+  2  after
+  3  insert
+  4  on transactions
+  5  for each row
+  6  begin
+  7  insert into auditlog(auditid,transactionid,accountid,amount,transactiontype,logdate)
+  8  values(audit_seq.nextval,:NEW.transactionid,:NEW.accountid,:NEW.amount,:NEW.transactiontype,
+  9  sysdate);
+ 10  end;
+ 11  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> 

@@ -1,0 +1,15 @@
+declare
+cursor customers_cursor is select name,dob,balance from customers;
+v_name varchar2(100);
+v_dob date;
+v_balance number;
+begin
+open customers_cursor;
+loop
+fetch customers_cursor into v_name,v_dob,v_balance;
+DBMS_OUTPUT.PUT_LINE('Name: '||v_name||', Balnce: '||v_balance);
+exit when customers_cursor%NOTFOUND;
+end loop;
+close customers_cursor;
+end;
+/

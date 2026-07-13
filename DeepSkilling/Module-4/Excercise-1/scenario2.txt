@@ -1,0 +1,13 @@
+declare
+cursor customer_cursor is select * from customers;
+begin
+for customer_record in customer_cursor loop
+if customer_record.balance>10000 then
+update customers set isVip=1 where customerid=customer_record.customerid;
+else 
+update customers set isVip=0 where customerid=customer_record.customerid;
+end if;
+end loop;
+end;
+/
+
